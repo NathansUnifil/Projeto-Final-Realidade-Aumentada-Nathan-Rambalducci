@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+  <title> Carregando </title>
+  <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
+  <!-- include ar.js for A-Frame -->
+  <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js@3.4.5/aframe/build/aframe-ar.min.js"></script>
+  <style>
+    #controls { display: none; position: fixed; z-index: 999; bottom: 20px; left: 0; color:PaleVioletRed; text-shadow: 2px 2px 5px; font-weight: bold}
+    #controls.visible { display: block; }
+    #active-marker-label { display: none; float: center; width: 33.33%; padding: 150px; height: 25px; color: darkSlateBlue; text-align: center; text-shadow: 2px 2px 5px; font-style: oblique; font-weight: 1000; font-size: 28px; font-family: "Lucida Console", "Courier New", monospace; }
+    #active-marker-label.visible { display: flex; }
+    h1 { background-color:rgb(250, 128, 114, 0.7); text-align: center; font-family: Arial, Helvetica, sans-serif;}
+  </style>
+</head>
+<body style='margin: 0px; overflow: hidden;'>
+  <h1>
+    Vitrine de Roupas
+  </h1>
+
+  <a-scene embedded arjs>
+
+    <a-assets>
+      <a-asset-item id="femaleClothes1" src="./femaleClothes1.glb"></a-asset-item>
+      <a-asset-item id="femaleClothes2" src="./femaleClothes2.glb"></a-asset-item>
+      <a-asset-item id="femaleClothes3" src="./femaleClothes3.glb"></a-asset-item>
+      <a-asset-item id="maleClothes1" src="./maleClothes1.glb"></a-asset-item>
+      <a-asset-item id="maleClothes2" src="./maleClothes2.glb"></a-asset-item>
+      <a-asset-item id="maleClothes3" src="./maleClothes3.glb"></a-asset-item>
+    </a-assets>
+
+    <a-marker type="pattern" url="./pattern-letterA.patt">
+      <a-entity id="model1" gltf-model="#femaleClothes1" rotation="-90 0 0" scale="0.005 0.005 0.005"></a-entity> <!-- Muito grande--> <!--Parce que tá bom (NOTA: COMEÇA COM A LETRA A)-->
+    </a-marker>
+
+    <a-marker type="pattern" url="./pattern-letterB.patt">
+      <a-entity id="model2" gltf-model="#femaleClothes2" rotation="-90 0 0" scale="0.8 0.8 0.8"></a-entity> <!--Muito grande e buga-->
+    </a-marker>
+
+    <a-marker type="pattern" url="./pattern-letterC.patt">
+      <a-entity id="model3" gltf-model="#femaleClothes3" rotation="-90 0 0" scale="1.8 1.8 1.8"></a-entity> <!-- Não aparece (Tá muito grande ou pequeno ou bugado?)-->
+    </a-marker>
+
+    <a-marker type="pattern" url="./pattern-letterD.patt">
+      <a-entity id="model4" gltf-model="#maleClothes1" rotation="-90 0 0" scale="1.0 1.0 1.0"></a-entity> <!-- Meio grande -->
+    </a-marker>
+
+    <a-marker type="pattern" url="./pattern-letterF.patt">
+      <a-entity id="model5" gltf-model="#maleClothes2" rotation="-90 0 0" scale="0.8 0.8 0.8"></a-entity> <!--Tá bom -->
+    </a-marker>
+
+    <a-marker type="pattern" url="./pattern-letterG.patt">
+      <a-entity id="model6" gltf-model="#maleClothes3" rotation="-90 0 0" scale="1.2 1.0 1.0 "></a-entity> <!--Meio bugado mais fazer oq-->
+    </a-marker>
+
+    <a-entity camera></a-entity>
+
+  </a-scene>
+
+  <div id="controls">
+    <div id="active-marker-label">—</div>
+    <!-- Position X -->
+    <div>
+      <span>Pos X</span>
+      <button onclick="changePos('x', -0.1)">−</button>
+      <span id="posXVal">0.0</span>
+      <button onclick="changePos('x', 0.1)">+</button>
+    </div>
+    <!-- Position Y -->
+    <div>
+      <span>Pos Y</span>
+      <button onclick="changePos('y', -0.1)">−</button>
+      <span id="posYVal">0.0</span>
+      <button onclick="changePos('y', 0.1)">+</button>
+    </div>
+    <!-- Position Z -->
+    <div>
+      <span>Pos Z</span>
+      <button onclick="changePos('z', -0.1)">−</button>
+      <span id="posZVal">0.0</span>
+      <button onclick="changePos('z', 0.1)">+</button>
+    </div>
+    <!-- Rotation X -->
+    <div>
+      <span>Rot X</span>
+      <button onclick="changeRot('x', -15)">−</button>
+      <span id="rotXVal">-90</span>
+      <button onclick="changeRot('x', 15)">+</button>
+    </div>
+    <!-- Rotation Y -->
+    <div>
+      <span>Rot Y</span>
+      <button onclick="changeRot('y', -15)">−</button>
+      <span id="rotYVal">0</span>
+      <button onclick="changeRot('y', 15)">+</button>
+    </div>
+    <!-- Rotation Z -->
+    <div>
+      <span>Rot Z</span>
+      <button onclick="changeRot('z', -15)">−</button>
+      <span id="rotZVal">0</span>
+      <button onclick="changeRot('z', 15)">+</button>
+    </div>
+  </div>
+
+  <script>
+    const controls = document.getElementById('controls');
+    const activeMarkerLabel = document.getElementById('active-marker-label');
+
+    // Cada marcador tem seu próprio modelo e estado independente
+    const markerConfig = [
+      {
+        name: 'Vestido Kimono Longo',
+        el: document.querySelector('[url="./pattern-letterA.patt"]'),
+        model: document.getElementById('model1'),
+        state: { scale: 1.0, pos: { x: 0, y: 0, z: 0.3 }, rot: { x: -90, y: 0, z: 0 } }
+      },
+      {
+        name: 'Vestido Roxo Elegante',
+        el: document.querySelector('[url="./pattern-letterB.patt"]'),
+        model: document.getElementById('model2'),
+        state: { scale: 1.0, pos: { x: 0, y: 0, z: 0.5 }, rot: { x: -90, y: 0, z: 0 } }
+      },
+      {
+        name: 'Sapatos Estilosos',
+        el: document.querySelector('[url="./pattern-letterC.patt"]'),
+        model: document.getElementById('model3'),
+        state: { scale: 1.0, pos: { x: -0.3, y: 0, z: 0.2 }, rot: { x: -90, y: 0, z: 0 } }
+      },
+      {
+        name: 'Blusa Moletom',
+        el: document.querySelector('[url="./pattern-letterD.patt"]'),
+        model: document.getElementById('model4'),
+        state: { scale: 1.0, pos: { x: 0, y: 0, z: 1.0 }, rot: { x: -90, y: 0, z: 0 } }
+      },
+      {
+        name: 'Jaqueta Urbana',
+        el: document.querySelector('[url="./pattern-letterF.patt"]'),
+        model: document.getElementById('model5'),
+        state: { scale: 1.0, pos: { x: 0, y: 0, z: 0 }, rot: { x: -90, y: 0, z: 0 } }
+      },
+      {
+        name: 'Roupas Baseball',
+        el: document.querySelector('[url="./pattern-letterG.patt"]'),
+        model: document.getElementById('model6'),
+        state: { scale: 1.0, pos: { x: 0, y: 0, z: 0 }, rot: { x: -90, y: 0, z: 0 } }
+      },
+    ];
+
+    let activeMarker = null;
+
+    markerConfig.forEach(m => {
+      m.el.addEventListener('markerFound', () => {
+        activeMarker = m;
+        console.log(`[AR] markerFound: ${m.name}`);
+        activeMarkerLabel.textContent = `Marcador ativo: ${m.name}`;
+        syncDisplays(m.state);
+        controls.classList.add('visible');
+        activeMarkerLabel.classList.add('visible');
+      });
+
+      m.el.addEventListener('markerLost', () => {
+        console.log(`[AR] markerLost: ${m.name}`);
+        if (activeMarker === m) {
+          activeMarker = null;
+          controls.classList.remove('visible');
+          activeMarkerLabel.classList.remove('visible');
+        }
+      });
+    });
+
+    // Atualiza todos os displays com o estado do marcador ativo
+
+    function syncDisplays(state) {
+      document.getElementById('posXVal').textContent  = state.pos.x.toFixed(1);
+      document.getElementById('posYVal').textContent  = state.pos.y.toFixed(1);
+      document.getElementById('posZVal').textContent  = state.pos.z.toFixed(1);
+      document.getElementById('rotXVal').textContent  = state.rot.x;
+      document.getElementById('rotYVal').textContent  = state.rot.y;
+      document.getElementById('rotZVal').textContent  = state.rot.z;
+    }
+
+    function changePos(axis, delta) {
+      if (!activeMarker) return;
+      const p = activeMarker.state.pos;
+      p[axis] = parseFloat((p[axis] + delta).toFixed(1));
+      activeMarker.model.setAttribute('position', `${p.x} ${p.y} ${p.z}`);
+      document.getElementById(`pos${axis.toUpperCase()}Val`).textContent = p[axis].toFixed(1);
+    }
+
+    function changeRot(axis, delta) {
+      if (!activeMarker) return;
+      const r = activeMarker.state.rot;
+      r[axis] = (r[axis] + delta) % 360;
+      activeMarker.model.setAttribute('rotation', `${r.x} ${r.y} ${r.z}`);
+      document.getElementById(`rot${axis.toUpperCase()}Val`).textContent = r[axis];
+    }
+  </script>
+</body>
+</html>
