@@ -45,30 +45,35 @@
     emitevents="true" cursor="fuse: false; rayOrigin: mouse;">
       <a-entity id="model2" gltf-model="#femaleClothes2" rotation="-90 0 0" scale="0.8 0.8 0.8" class="clickable"
       gesture-handler></a-entity> <!--Muito grande e buga-->
+      <a-animation attribute="rotation" dur="5000" fill="forwards" to="0 360 0" begin="spin-start" end="spin-stop" easing="ease-in" repeat="indefinite"></a-animation>
     </a-marker>
 
     <a-marker type="pattern" url="./pattern-letterC.patt" raycaster="objects: .clickable"
     emitevents="true" cursor="fuse: false; rayOrigin: mouse;">
       <a-entity id="model3" gltf-model="#femaleClothes3" rotation="-90 0 0" scale="1.8 1.8 1.8" class="clickable"
       gesture-handler></a-entity> <!-- Não aparece (Tá muito grande ou pequeno ou bugado?)-->
+      <a-animation attribute="rotation" dur="5000" fill="forwards" to="0 360 0" begin="spin-start" end="spin-stop" easing="ease-in" repeat="indefinite"></a-animation>
     </a-marker>
 
     <a-marker type="pattern" url="./pattern-letterD.patt" raycaster="objects: .clickable"
     emitevents="true" cursor="fuse: false; rayOrigin: mouse;">
       <a-entity id="model4" gltf-model="#maleClothes1" rotation="-90 0 0" scale="1.0 1.0 1.0" class="clickable"
       gesture-handler></a-entity> <!-- Meio grande -->
+      <a-animation attribute="rotation" dur="5000" fill="forwards" to="0 360 0" begin="spin-start" end="spin-stop" easing="ease-in" repeat="indefinite"></a-animation>
     </a-marker>
 
     <a-marker type="pattern" url="./pattern-letterF.patt" raycaster="objects: .clickable"
     emitevents="true" cursor="fuse: false; rayOrigin: mouse;">
       <a-entity id="model5" gltf-model="#maleClothes2" rotation="-90 0 0" scale="0.8 0.8 0.8" class="clickable"
       gesture-handler></a-entity> <!--Tá bom -->
+      <a-animation attribute="rotation" dur="5000" fill="forwards" to="0 360 0" begin="spin-start" end="spin-stop" easing="ease-in" repeat="indefinite"></a-animation>
     </a-marker>
 
     <a-marker type="pattern" url="./pattern-letterG.patt" raycaster="objects: .clickable"
     emitevents="true" cursor="fuse: false; rayOrigin: mouse;">
       <a-entity id="model6" gltf-model="#maleClothes3" rotation="-90 0 0" scale="1.2 1.0 1.0 " class="clickable"
       gesture-handler></a-entity> <!--Meio bugado mais fazer oq-->
+      <a-animation attribute="rotation" dur="5000" fill="forwards" to="0 360 0" begin="spin-start" end="spin-stop" easing="ease-in" repeat="indefinite"></a-animation>
     </a-marker>
 
     <a-entity camera></a-entity>
