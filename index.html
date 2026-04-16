@@ -7,11 +7,13 @@
   <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
   <!-- include ar.js for A-Frame -->
   <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js@3.4.5/aframe/build/aframe-ar.min.js"></script>
+  <script src="https://raw.githack.com/fcor/arjs-gestures/master/dist/gestures.js"></script>
   <style>
     #controls { display: none; position: fixed; z-index: 999; bottom: 20px; left: 0; color:PaleVioletRed; text-shadow: 2px 2px 5px; font-weight: bold}
     #controls.visible { display: block; }
     #active-marker-label { display: none; float: center; width: 33.33%; padding: 150px; height: 25px; color: darkSlateBlue; text-align: center; text-shadow: 2px 2px 5px; font-style: oblique; font-weight: 1000; font-size: 28px; font-family: "Lucida Console", "Courier New", monospace; }
     #active-marker-label.visible { display: flex; }
+    button {border-radius: 8px; font-size: medium;}
     h1 { background-color:rgb(250, 128, 114, 0.7); text-align: center; font-family: Arial, Helvetica, sans-serif;}
   </style>
 </head>
@@ -20,7 +22,7 @@
     Vitrine de Roupas
   </h1>
 
-  <a-scene embedded arjs>
+  <a-scene embedded arjs gesture-detector>
 
     <a-assets>
       <a-asset-item id="femaleClothes1" src="./femaleClothes1.glb"></a-asset-item>
@@ -31,28 +33,42 @@
       <a-asset-item id="maleClothes3" src="./maleClothes3.glb"></a-asset-item>
     </a-assets>
 
-    <a-marker type="pattern" url="./pattern-letterA.patt">
-      <a-entity id="model1" gltf-model="#femaleClothes1" rotation="-90 0 0" scale="0.005 0.005 0.005"></a-entity> <!-- Muito grande--> <!--Parce que tá bom (NOTA: COMEÇA COM A LETRA A)-->
+    <a-marker type="pattern" url="./pattern-letterA.patt" raycaster="objects: .clickable"
+    emitevents="true" cursor="fuse: false; rayOrigin: mouse;">
+      <a-entity id="model1" gltf-model="#femaleClothes1" rotation="-90 0 0" scale="0.005 0.005 0.005" class="clickable"
+      gesture-handler></a-entity>
+      <a-animation attribute="rotation" dur="5000" fill="forwards" to="0 360 0" begin="spin-start" end="spin-stop" easing="ease-in" repeat="indefinite"></a-animation>
+ <!--Parce que tá bom (NOTA: COMEÇA COM A LETRA A)-->
     </a-marker>
 
-    <a-marker type="pattern" url="./pattern-letterB.patt">
-      <a-entity id="model2" gltf-model="#femaleClothes2" rotation="-90 0 0" scale="0.8 0.8 0.8"></a-entity> <!--Muito grande e buga-->
+    <a-marker type="pattern" url="./pattern-letterB.patt" raycaster="objects: .clickable"
+    emitevents="true" cursor="fuse: false; rayOrigin: mouse;">
+      <a-entity id="model2" gltf-model="#femaleClothes2" rotation="-90 0 0" scale="0.8 0.8 0.8" class="clickable"
+      gesture-handler></a-entity> <!--Muito grande e buga-->
     </a-marker>
 
-    <a-marker type="pattern" url="./pattern-letterC.patt">
-      <a-entity id="model3" gltf-model="#femaleClothes3" rotation="-90 0 0" scale="1.8 1.8 1.8"></a-entity> <!-- Não aparece (Tá muito grande ou pequeno ou bugado?)-->
+    <a-marker type="pattern" url="./pattern-letterC.patt" raycaster="objects: .clickable"
+    emitevents="true" cursor="fuse: false; rayOrigin: mouse;">
+      <a-entity id="model3" gltf-model="#femaleClothes3" rotation="-90 0 0" scale="1.8 1.8 1.8" class="clickable"
+      gesture-handler></a-entity> <!-- Não aparece (Tá muito grande ou pequeno ou bugado?)-->
     </a-marker>
 
-    <a-marker type="pattern" url="./pattern-letterD.patt">
-      <a-entity id="model4" gltf-model="#maleClothes1" rotation="-90 0 0" scale="1.0 1.0 1.0"></a-entity> <!-- Meio grande -->
+    <a-marker type="pattern" url="./pattern-letterD.patt" raycaster="objects: .clickable"
+    emitevents="true" cursor="fuse: false; rayOrigin: mouse;">
+      <a-entity id="model4" gltf-model="#maleClothes1" rotation="-90 0 0" scale="1.0 1.0 1.0" class="clickable"
+      gesture-handler></a-entity> <!-- Meio grande -->
     </a-marker>
 
-    <a-marker type="pattern" url="./pattern-letterF.patt">
-      <a-entity id="model5" gltf-model="#maleClothes2" rotation="-90 0 0" scale="0.8 0.8 0.8"></a-entity> <!--Tá bom -->
+    <a-marker type="pattern" url="./pattern-letterF.patt" raycaster="objects: .clickable"
+    emitevents="true" cursor="fuse: false; rayOrigin: mouse;">
+      <a-entity id="model5" gltf-model="#maleClothes2" rotation="-90 0 0" scale="0.8 0.8 0.8" class="clickable"
+      gesture-handler></a-entity> <!--Tá bom -->
     </a-marker>
 
-    <a-marker type="pattern" url="./pattern-letterG.patt">
-      <a-entity id="model6" gltf-model="#maleClothes3" rotation="-90 0 0" scale="1.2 1.0 1.0 "></a-entity> <!--Meio bugado mais fazer oq-->
+    <a-marker type="pattern" url="./pattern-letterG.patt" raycaster="objects: .clickable"
+    emitevents="true" cursor="fuse: false; rayOrigin: mouse;">
+      <a-entity id="model6" gltf-model="#maleClothes3" rotation="-90 0 0" scale="1.2 1.0 1.0 " class="clickable"
+      gesture-handler></a-entity> <!--Meio bugado mais fazer oq-->
     </a-marker>
 
     <a-entity camera></a-entity>
@@ -61,49 +77,24 @@
 
   <div id="controls">
     <div id="active-marker-label">—</div>
-    <!-- Position X -->
-    <div>
-      <span>Pos X</span>
-      <button onclick="changePos('x', -0.1)">−</button>
-      <span id="posXVal">0.0</span>
-      <button onclick="changePos('x', 0.1)">+</button>
+    <!-- Resetar Posição -->
+     <div>
+      <button style="font-size: x-large;" onclick="changePos('x', 0.1 - 0.1)">Consertar Posição</button>
     </div>
-    <!-- Position Y -->
+    <!-- Girar -->
     <div>
-      <span>Pos Y</span>
-      <button onclick="changePos('y', -0.1)">−</button>
-      <span id="posYVal">0.0</span>
-      <button onclick="changePos('y', 0.1)">+</button>
+      <button style="font-size: x-large;" onclick="startSpin()">Parar ou fazer girar</button>
     </div>
-    <!-- Position Z -->
+    <!-- Resetar Rotação -->
+     <div>
+      <button style="font-size: x-large;" onclick="changeRot('x', -90)">Consertar Rotação X</button>
+    </div>
     <div>
-      <span>Pos Z</span>
-      <button onclick="changePos('z', -0.1)">−</button>
-      <span id="posZVal">0.0</span>
-      <button onclick="changePos('z', 0.1)">+</button>
+      <button style="font-size: x-large;" onclick="changeRot('y', 0)">Consertar Rotação Y</button>
     </div>
-    <!-- Rotation X -->
     <div>
-      <span>Rot X</span>
-      <button onclick="changeRot('x', -15)">−</button>
-      <span id="rotXVal">-90</span>
-      <button onclick="changeRot('x', 15)">+</button>
+      <button style="font-size: x-large;" onclick="changeRot('z', 0)">Consertar Rotação Z</button>
     </div>
-    <!-- Rotation Y -->
-    <div>
-      <span>Rot Y</span>
-      <button onclick="changeRot('y', -15)">−</button>
-      <span id="rotYVal">0</span>
-      <button onclick="changeRot('y', 15)">+</button>
-    </div>
-    <!-- Rotation Z -->
-    <div>
-      <span>Rot Z</span>
-      <button onclick="changeRot('z', -15)">−</button>
-      <span id="rotZVal">0</span>
-      <button onclick="changeRot('z', 15)">+</button>
-    </div>
-  </div>
 
   <script>
     const controls = document.getElementById('controls');
@@ -156,7 +147,6 @@
         activeMarker = m;
         console.log(`[AR] markerFound: ${m.name}`);
         activeMarkerLabel.textContent = `Marcador ativo: ${m.name}`;
-        syncDisplays(m.state);
         controls.classList.add('visible');
         activeMarkerLabel.classList.add('visible');
       });
@@ -173,15 +163,6 @@
 
     // Atualiza todos os displays com o estado do marcador ativo
 
-    function syncDisplays(state) {
-      document.getElementById('posXVal').textContent  = state.pos.x.toFixed(1);
-      document.getElementById('posYVal').textContent  = state.pos.y.toFixed(1);
-      document.getElementById('posZVal').textContent  = state.pos.z.toFixed(1);
-      document.getElementById('rotXVal').textContent  = state.rot.x;
-      document.getElementById('rotYVal').textContent  = state.rot.y;
-      document.getElementById('rotZVal').textContent  = state.rot.z;
-    }
-
     function changePos(axis, delta) {
       if (!activeMarker) return;
       const p = activeMarker.state.pos;
@@ -193,9 +174,19 @@
     function changeRot(axis, delta) {
       if (!activeMarker) return;
       const r = activeMarker.state.rot;
-      r[axis] = (r[axis] + delta) % 360;
+      r[axis] = (r[axis] = delta);
       activeMarker.model.setAttribute('rotation', `${r.x} ${r.y} ${r.z}`);
       document.getElementById(`rot${axis.toUpperCase()}Val`).textContent = r[axis];
+    }
+
+    let aniSpin = false;
+
+    function startSpin() {
+      if (!activeMarker) return;
+      document.getElementsByName("spin-start").addEventListener("click", function () {
+            const ani = document.querySelector(activeMarker.model);
+            ani.emit(aniSpin ? 'spin-start' : 'spin-stop');
+        });
     }
   </script>
 </body>
